@@ -1127,7 +1127,7 @@ and __ocaml_lex_comment_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
 # 50 "lexer.mll"
-        ( lexical := "end of comment"; numOfEol := !numOfEol + 1; lexer lexbuf )
+        ( numOfEol := !numOfEol + 1; lexer lexbuf )
 # 1132 "lexer.ml"
 
   | 1 ->

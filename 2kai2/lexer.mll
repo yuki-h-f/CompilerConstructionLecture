@@ -47,6 +47,6 @@ rule lexer = parse
 | eof                     { lexical := "eof"; raise End_of_file }
 | _                       { lexical := "No_such_symbol"; raise No_such_symbol }
 and comment = parse
-| '\n'  { lexical := "end of comment"; numOfEol := !numOfEol + 1; lexer lexbuf }
+| '\n'  { numOfEol := !numOfEol + 1; lexer lexbuf }
 | eof   { lexical := "eof"; raise End_of_file }
 | _     { comment lexbuf }

@@ -18,7 +18,7 @@
 	}
         {
                 wa = 1;
-        
+        }
         // aaaaa
         sprint ("Answer = "); 
         iprint (m) ;

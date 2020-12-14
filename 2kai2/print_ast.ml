@@ -48,4 +48,4 @@ let main () =
                    print_string "\n"
 
 let _ = try main () with 
-         Parsing.Parse_error -> printf "syntax error\nrow: %d\nsyntax error lexical: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical))
+         Parsing.Parse_error -> printf "syntax error\nrow: %d\nA lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical))
