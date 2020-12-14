@@ -122,10 +122,6 @@ aargs : aargs COMMA expr  { $1@[$3] }
       ;
 
 block: LB decs stmts RB  { Block ($2, $3) }
-     | LB decs stmts error { 
-          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
-          Block ($2, $3)
-     }
      ;
 
 
