@@ -1,0 +1,29 @@
+yuki@yuki-LM-AR420:~/3nen_koki/CompilerConstructionLecture/2kai2$ ./print_ast 
+{
+	x = 1;
+	y = 2;
+	print(x);
+	b = 1
+	y
+syntax error
+row: 6
+A lexical of syntax error: y
+yuki@yuki-LM-AR420:~/3nen_koki/CompilerConstructionLecture/2kai2$ ./print_ast 
+{
+	x = 1;
+	// comment
+	1
+syntax error
+row: 4
+A lexical of syntax error: 1
+yuki@yuki-LM-AR420:~/3nen_koki/CompilerConstructionLecture/2kai2$ ./print_ast 
+{
+	// comment1
+	// comment2
+	// comment3
+	x = 1;
+	y = 2
+	if (x != 1) {
+syntax error
+row: 7
+A lexical of syntax error: if
