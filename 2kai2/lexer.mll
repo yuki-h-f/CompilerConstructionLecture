@@ -1,7 +1,6 @@
 (* File lexer.mll *)
 {
  open Parser
- open Printf
  let numOfEol = ref 1
  let lexical = ref ""
  exception No_such_symbol
@@ -48,6 +47,6 @@ rule lexer = parse
 | eof                     { lexical := "eof"; raise End_of_file }
 | _                       { lexical := "No_such_symbol"; raise No_such_symbol }
 and comment = parse
-| '\n'  { lexical := "end of comment"; lexer lexbuf }
+| '\n'  { lexical := "end of comment"; numOfEol := !numOfEol + 1; lexer lexbuf }
 | eof   { lexical := "eof"; raise End_of_file }
 | _     { comment lexbuf }
