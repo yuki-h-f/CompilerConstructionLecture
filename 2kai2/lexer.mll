@@ -10,7 +10,7 @@ let digit = ['0'-'9']
 let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9']*
 
 rule lexer = parse
-| digit+ as num  { NUM (int_of_string num) }
+| digit+ as num  { lexical := num; NUM (int_of_string num) }
 | "if"                    { lexical := "if"; IF }
 | "else"                  { lexical := "else"; ELSE }
 | "while"                 { lexical := "while"; WHILE }
@@ -21,8 +21,8 @@ rule lexer = parse
 | "return"                { lexical := "return"; RETURN }
 | "type"                  { lexical := "type"; TYPE }
 | "void"                  { lexical := "void"; VOID }
-| id as text              { lexical := "id"; ID text }
-| '\"'[^'\"']*'\"' as str { lexical := "str"; STR str }
+| id as text              { lexical := text; ID text }
+| '\"'[^'\"']*'\"' as str { lexical := str; STR str }
 | '='                     { lexical := "="; ASSIGN }
 | "=="                    { lexical := "=="; EQ }
 | "!="                    { lexical := "!="; NEQ }
@@ -48,6 +48,6 @@ rule lexer = parse
 | eof                     { lexical := "eof"; raise End_of_file }
 | _                       { lexical := "No_such_symbol"; raise No_such_symbol }
 and comment = parse
-| '\n'  { lexical := "comment"; lexer lexbuf }
+| '\n'  { lexical := "end of comment"; lexer lexbuf }
 | eof   { lexical := "eof"; raise End_of_file }
 | _     { comment lexbuf }

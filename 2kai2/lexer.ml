@@ -986,7 +986,7 @@ let
 # 987 "lexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
 # 24 "lexer.mll"
-                          ( lexical := "id"; ID text )
+                          ( lexical := text; ID text )
 # 991 "lexer.ml"
 
   | 12 ->
@@ -996,7 +996,7 @@ let
 # 997 "lexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
 # 25 "lexer.mll"
-                          ( lexical := "str"; STR str )
+                          ( lexical := str; STR str )
 # 1001 "lexer.ml"
 
   | 13 ->
