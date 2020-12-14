@@ -16,6 +16,9 @@
                 m = n;
                 n = r;
 	}
+        {
+                wa = 1;
+        
         // aaaaa
         sprint ("Answer = "); 
         iprint (m) ;

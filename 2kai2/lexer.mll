@@ -12,42 +12,42 @@ let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9']*
 rule lexer = parse
 | digit+ as num  { NUM (int_of_string num) }
 | "if"                    { lexical := "if"; IF }
-| "else"                  { ELSE }
-| "while"                 { WHILE }
-| "scan"                  { SCAN }
-| "sprint"                { SPRINT }
-| "iprint"                { IPRINT }
-| "int"                   { INT }
-| "return"                { RETURN }
-| "type"                  { TYPE }
-| "void"                  { VOID }
-| id as text              { ID text }
-| '\"'[^'\"']*'\"' as str { STR str }
-| '='                     { ASSIGN }
-| "=="                    { EQ }
-| "!="                    { NEQ }
-| '>'                     { GT }
-| '<'                     { LT }
-| ">="                    { GE }
-| "<="                    { LE }
-| '+'                     { PLUS }
-| '-'                     { MINUS }
-| '*'                     { TIMES }
-| '/'                     { DIV }
-| '{'                     { LB  }
-| '}'                     { RB  }
-| '['                     { LS }
-| ']'                     { RS }
-| '('                     { LP  }
-| ')'                     { RP  }
-| ','                     { COMMA }
-| ';'                     { SEMI }
-| '\n'                    { numOfEol := !numOfEol + 1; lexer lexbuf }
+| "else"                  { lexical := "else"; ELSE }
+| "while"                 { lexical := "while"; WHILE }
+| "scan"                  { lexical := "scan"; SCAN }
+| "sprint"                { lexical := "sprint"; SPRINT }
+| "iprint"                { lexical := "iprint"; IPRINT }
+| "int"                   { lexical := "int"; INT }
+| "return"                { lexical := "return"; RETURN }
+| "type"                  { lexical := "type"; TYPE }
+| "void"                  { lexical := "void"; VOID }
+| id as text              { lexical := "id"; ID text }
+| '\"'[^'\"']*'\"' as str { lexical := "str"; STR str }
+| '='                     { lexical := "="; ASSIGN }
+| "=="                    { lexical := "=="; EQ }
+| "!="                    { lexical := "!="; NEQ }
+| '>'                     { lexical := ">"; GT }
+| '<'                     { lexical := "<"; LT }
+| ">="                    { lexical := ">="; GE }
+| "<="                    { lexical := "<="; LE }
+| '+'                     { lexical := "+"; PLUS }
+| '-'                     { lexical := "-"; MINUS }
+| '*'                     { lexical := "*"; TIMES }
+| '/'                     { lexical := "/"; DIV }
+| '{'                     { lexical := "{"; LB  }
+| '}'                     { lexical := "}"; RB  }
+| '['                     { lexical := "["; LS }
+| ']'                     { lexical := "]"; RS }
+| '('                     { lexical := "("; LP  }
+| ')'                     { lexical := ")"; RP  }
+| ','                     { lexical := ","; COMMA } 
+| ';'                     { lexical := ";"; SEMI }
+| '\n'                    { numOfEol := !numOfEol + 1; lexical := "eol"; lexer lexbuf }
 | [' ' '\t' ]       { lexer lexbuf }(* eat up whitespace *)
 | "//"                    { comment lexbuf }
-| eof                     { raise End_of_file }
-| _                       { raise No_such_symbol }
+| eof                     { lexical := "eof"; raise End_of_file }
+| _                       { lexical := "No_such_symbol"; raise No_such_symbol }
 and comment = parse
-| '\n'  { lexer lexbuf }
-| eof   { raise End_of_file }
+| '\n'  { lexical := "comment"; lexer lexbuf }
+| eof   { lexical := "eof"; raise End_of_file }
 | _     { comment lexbuf }

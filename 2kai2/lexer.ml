@@ -936,47 +936,47 @@ let
 
   | 2 ->
 # 15 "lexer.mll"
-                          ( ELSE )
+                          ( lexical := "else"; ELSE )
 # 941 "lexer.ml"
 
   | 3 ->
 # 16 "lexer.mll"
-                          ( WHILE )
+                          ( lexical := "while"; WHILE )
 # 946 "lexer.ml"
 
   | 4 ->
 # 17 "lexer.mll"
-                          ( SCAN )
+                          ( lexical := "scan"; SCAN )
 # 951 "lexer.ml"
 
   | 5 ->
 # 18 "lexer.mll"
-                          ( SPRINT )
+                          ( lexical := "sprint"; SPRINT )
 # 956 "lexer.ml"
 
   | 6 ->
 # 19 "lexer.mll"
-                          ( IPRINT )
+                          ( lexical := "iprint"; IPRINT )
 # 961 "lexer.ml"
 
   | 7 ->
 # 20 "lexer.mll"
-                          ( INT )
+                          ( lexical := "int"; INT )
 # 966 "lexer.ml"
 
   | 8 ->
 # 21 "lexer.mll"
-                          ( RETURN )
+                          ( lexical := "return"; RETURN )
 # 971 "lexer.ml"
 
   | 9 ->
 # 22 "lexer.mll"
-                          ( TYPE )
+                          ( lexical := "type"; TYPE )
 # 976 "lexer.ml"
 
   | 10 ->
 # 23 "lexer.mll"
-                          ( VOID )
+                          ( lexical := "void"; VOID )
 # 981 "lexer.ml"
 
   | 11 ->
@@ -986,7 +986,7 @@ let
 # 987 "lexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
 # 24 "lexer.mll"
-                          ( ID text )
+                          ( lexical := "id"; ID text )
 # 991 "lexer.ml"
 
   | 12 ->
@@ -996,107 +996,107 @@ let
 # 997 "lexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
 # 25 "lexer.mll"
-                          ( STR str )
+                          ( lexical := "str"; STR str )
 # 1001 "lexer.ml"
 
   | 13 ->
 # 26 "lexer.mll"
-                          ( ASSIGN )
+                          ( lexical := "="; ASSIGN )
 # 1006 "lexer.ml"
 
   | 14 ->
 # 27 "lexer.mll"
-                          ( EQ )
+                          ( lexical := "=="; EQ )
 # 1011 "lexer.ml"
 
   | 15 ->
 # 28 "lexer.mll"
-                          ( NEQ )
+                          ( lexical := "!="; NEQ )
 # 1016 "lexer.ml"
 
   | 16 ->
 # 29 "lexer.mll"
-                          ( GT )
+                          ( lexical := ">"; GT )
 # 1021 "lexer.ml"
 
   | 17 ->
 # 30 "lexer.mll"
-                          ( LT )
+                          ( lexical := "<"; LT )
 # 1026 "lexer.ml"
 
   | 18 ->
 # 31 "lexer.mll"
-                          ( GE )
+                          ( lexical := ">="; GE )
 # 1031 "lexer.ml"
 
   | 19 ->
 # 32 "lexer.mll"
-                          ( LE )
+                          ( lexical := "<="; LE )
 # 1036 "lexer.ml"
 
   | 20 ->
 # 33 "lexer.mll"
-                          ( PLUS )
+                          ( lexical := "+"; PLUS )
 # 1041 "lexer.ml"
 
   | 21 ->
 # 34 "lexer.mll"
-                          ( MINUS )
+                          ( lexical := "-"; MINUS )
 # 1046 "lexer.ml"
 
   | 22 ->
 # 35 "lexer.mll"
-                          ( TIMES )
+                          ( lexical := "*"; TIMES )
 # 1051 "lexer.ml"
 
   | 23 ->
 # 36 "lexer.mll"
-                          ( DIV )
+                          ( lexical := "/"; DIV )
 # 1056 "lexer.ml"
 
   | 24 ->
 # 37 "lexer.mll"
-                          ( LB  )
+                          ( lexical := "{"; LB  )
 # 1061 "lexer.ml"
 
   | 25 ->
 # 38 "lexer.mll"
-                          ( RB  )
+                          ( lexical := "}"; RB  )
 # 1066 "lexer.ml"
 
   | 26 ->
 # 39 "lexer.mll"
-                          ( LS )
+                          ( lexical := "["; LS )
 # 1071 "lexer.ml"
 
   | 27 ->
 # 40 "lexer.mll"
-                          ( RS )
+                          ( lexical := "]"; RS )
 # 1076 "lexer.ml"
 
   | 28 ->
 # 41 "lexer.mll"
-                          ( LP  )
+                          ( lexical := "("; LP  )
 # 1081 "lexer.ml"
 
   | 29 ->
 # 42 "lexer.mll"
-                          ( RP  )
+                          ( lexical := ")"; RP  )
 # 1086 "lexer.ml"
 
   | 30 ->
 # 43 "lexer.mll"
-                          ( COMMA )
+                          ( lexical := ","; COMMA )
 # 1091 "lexer.ml"
 
   | 31 ->
 # 44 "lexer.mll"
-                          ( SEMI )
+                          ( lexical := ";"; SEMI )
 # 1096 "lexer.ml"
 
   | 32 ->
 # 45 "lexer.mll"
-                          ( numOfEol := !numOfEol + 1; lexer lexbuf )
+                          ( numOfEol := !numOfEol + 1; lexical := "eol"; lexer lexbuf )
 # 1101 "lexer.ml"
 
   | 33 ->
@@ -1111,12 +1111,12 @@ let
 
   | 35 ->
 # 48 "lexer.mll"
-                          ( raise End_of_file )
+                          ( lexical := "eof"; raise End_of_file )
 # 1116 "lexer.ml"
 
   | 36 ->
 # 49 "lexer.mll"
-                          ( raise No_such_symbol )
+                          ( lexical := "No_such_symbol"; raise No_such_symbol )
 # 1121 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;
@@ -1128,12 +1128,12 @@ and __ocaml_lex_comment_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
 # 51 "lexer.mll"
-        ( lexer lexbuf )
+        ( lexical := "comment"; lexer lexbuf )
 # 1133 "lexer.ml"
 
   | 1 ->
 # 52 "lexer.mll"
-        ( raise End_of_file )
+        ( lexical := "eof"; raise End_of_file )
 # 1138 "lexer.ml"
 
   | 2 ->
