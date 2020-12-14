@@ -35,6 +35,10 @@ decs : decs dec { $1@$2 }
      ;
 
 dec  : ty ids SEMI   { List.map (fun x -> VarDec ($1,x)) $2 }
+     | ty ids error   {
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+          List.map (fun x -> VarDec ($1,x)) $2
+     }
      | TYPE ID ASSIGN ty SEMI { [TypeDec ($2,$4)] }
      | TYPE ID ASSIGN ty error {
           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
