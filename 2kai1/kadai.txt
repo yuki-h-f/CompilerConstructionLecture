@@ -1,0 +1,22 @@
+yuki@yuki-LM-AR420:~/3nen_koki/CompilerConstructionLecture/2kai1$ make 
+ocamlyacc parser.mly
+1 shift/reduce conflict.
+ocamllex lexer.mll
+75 states, 3428 transitions, table size 14162 bytes
+ocamlc -c ast.ml
+ocamlc -c parser.mli
+ocamlc -c lexer.ml
+ocamlc -c parser.ml
+ocamlc -c print_ast.ml
+ocamlc -o print_ast unix.cma ast.cmo lexer.cmo parser.cmo print_ast.cmo
+yuki@yuki-LM-AR420:~/3nen_koki/CompilerConstructionLecture/2kai1$ ./print_ast 
+{
+	a = x + 1;
+	// comment1
+	print(a);
+	// comment2
+	print(x);
+	//comment3
+	//comment4
+}	
+Block([],[Assign(Var "a",CallFunc("+",[VarExp(Var "x"); IntExp(1)])); CallProc("print",[VarExp(Var "a")]); CallProc("print",[VarExp(Var "x")])])
