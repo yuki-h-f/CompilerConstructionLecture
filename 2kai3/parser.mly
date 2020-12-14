@@ -2,6 +2,7 @@
 
 open Printf
 open Ast
+open Lexer
 %}
 
 /* File parser.mly */
@@ -35,7 +36,11 @@ decs : decs dec { $1@$2 }
      ;
 
 dec  : ty ids SEMI   { List.map (fun x -> VarDec ($1,x)) $2 }
-     | TYPE ID ASSIGN ty SEMI { [TypeDec ($2,$4)] }
+     | TYPE ID ASSIGN ty SEMI {
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+          [TypeDec ($2,$4)]
+     }
+     | TYPE ID ASSIGN ty error { [TypeDec ($2,$4)] }
      | ty ID LP fargs_opt RP block  { [FuncDec($2, $4, $1, $6)] }
      | VOID ID LP fargs_opt RP block  { [FuncDec($2, $4, VoidTyp, $6)] }
      ; 
@@ -58,17 +63,49 @@ stmts: stmts stmt  { $1@[$2] }
 
 
 stmt : ID ASSIGN expr SEMI    { Assign (Var $1, $3) }
+     | ID ASSIGN expr error    {
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+          Assign (Var $1, $3)
+     }
      | ID LS expr RS ASSIGN expr SEMI  { Assign (IndexedVar (Var $1, $3), $6) }
+     | ID LS expr RS ASSIGN expr error  { 
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+          Assign (IndexedVar (Var $1, $3), $6)
+     }
      | IF LP cond RP stmt     { If ($3, $5, None) }
      | IF LP cond RP stmt ELSE stmt 
                               { If ($3, $5, Some $7) }
      | WHILE LP cond RP stmt  { While ($3, $5) }
      | SPRINT LP STR RP SEMI  { CallProc ("sprint", [StrExp $3]) }
+     | SPRINT LP STR RP error  {
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+          CallProc ("sprint", [StrExp $3]) 
+     }
      | IPRINT LP expr RP SEMI { CallProc ("iprint", [$3]) }
+     | IPRINT LP expr RP error {
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+          CallProc ("iprint", [$3])
+     }
      | SCAN LP ID RP SEMI  { CallProc ("scan", [VarExp (Var $3)]) }
+     | SCAN LP ID RP error  {
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical)); 
+          CallProc ("scan", [VarExp (Var $3)])
+     }
      | NEW LP ID RP SEMI   { CallProc ("new", [ VarExp (Var $3)]) }
+     | NEW LP ID RP error   {
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+          CallProc ("new", [ VarExp (Var $3)])
+     }
      | ID LP aargs_opt RP SEMI  { CallProc ($1, $3) }
+     | ID LP aargs_opt RP error  { 
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+          CallProc ($1, $3)
+     }
      | RETURN expr SEMI    { CallProc ("return", [$2]) }
+     | RETURN expr error    {
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+          CallProc ("return", [$2])
+     }
      | block { $1 }
      | SEMI { NilStmt }
      ;
@@ -82,6 +119,10 @@ aargs : aargs COMMA expr  { $1@[$3] }
       ;
 
 block: LB decs stmts RB  { Block ($2, $3) }
+     | LB decs stmts error { 
+          printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+          Block ($2, $3)
+     }
      ;
 
 

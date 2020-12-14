@@ -1,5 +1,5 @@
 {
-	int a, b, m, n, r;
+	int a, b, m, n, r, x;
 
         sprint ("You must give 2 integers.\n");
         sprint ("First integer: ");
@@ -9,6 +9,7 @@
         m = a; n = b;
         r = m - (m / n) * n;
         m = n;
+        x = 1
         n = r;
 	while (r > 0) {
                 r = m - (m / n) * n;
@@ -16,13 +17,12 @@
                 m = n;
                 n = r;
 	}
-        {
-                wa = 1;
-        }
-        // aaaaa
+        iprint(m)
+        sprint ("b")
         sprint ("Answer = "); 
         iprint (m) ;
         sprint ("\n");
+        sprint("a")
 }
 
 
