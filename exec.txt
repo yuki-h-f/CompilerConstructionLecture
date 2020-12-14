@@ -1,0 +1,72 @@
+# #use "interp1.ml";;
+type id = string
+type stmt = Stmts of stmt * stmt | Assign of id * exp | Print of exp
+and exp =
+    Id of id
+  | Num of int
+  | Plus of exp * exp
+  | Minus of exp * exp
+  | Times of exp * exp
+  | Div of exp * exp
+  | StmtExp of stmt * exp
+exception No_such_symbol
+val e0 : 'a -> 'b = <fun>
+val update : 'a -> 'b -> ('a -> 'b) -> 'a -> 'b = <fun>
+val trans_stmt : stmt -> (id -> int) -> id -> int = <fun>
+val trans_exp : exp -> (id -> int) -> int = <fun>
+val prog : stmt =
+  Stmts (Assign ("x", Plus (Num 1, Times (Num 2, Num 3))),
+   Stmts (Assign ("y", Div (Id "x", Num 4)), Print (Id "y")))
+val prog1 : stmt =
+  Stmts (Assign ("y", StmtExp (Assign ("x", Plus (Num 1, Num 2)), Id "x")),
+   Print (Id "y"))
+val prog2 : stmt =
+  Stmts (Assign ("y", StmtExp (Assign ("x", Plus (Num 1, Num 2)), Id "x")),
+   Print (Id "x"))
+val interp : stmt -> id -> int = <fun>
+# interp prog;;
+1
+- : id -> int = <fun>
+# interp prog1;;
+3
+- : id -> int = <fun>
+# interp prog2;;
+Exception: No_such_symbol.
+
+////////////////////////////////////////
+
+# #use "interp2.ml";;
+type id = string
+type stmt = Stmts of stmt * stmt | Assign of id * exp | Print of exp
+and exp =
+    Id of id
+  | Num of int
+  | Plus of exp * exp
+  | Minus of exp * exp
+  | Times of exp * exp
+  | Div of exp * exp
+  | StmtExp of stmt * exp
+exception No_such_symbol
+val e0 : 'a -> 'b = <fun>
+val update : 'a -> 'b -> ('a -> 'b) -> 'a -> 'b = <fun>
+val trans_stmt : stmt -> (id -> int) -> id -> int = <fun>
+val trans_exp : exp -> (id -> int) -> (id -> int) * int = <fun>
+val prog : stmt =
+  Stmts (Assign ("x", Plus (Num 1, Times (Num 2, Num 3))),
+   Stmts (Assign ("y", Div (Id "x", Num 4)), Print (Id "y")))
+val prog1 : stmt =
+  Stmts (Assign ("y", StmtExp (Assign ("x", Plus (Num 1, Num 2)), Id "x")),
+   Print (Id "y"))
+val prog2 : stmt =
+  Stmts (Assign ("y", StmtExp (Assign ("x", Plus (Num 1, Num 2)), Id "x")),
+   Print (Id "x"))
+val interp : stmt -> id -> int = <fun>
+# interp prog;;
+1
+- : id -> int = <fun>
+# interp prog1;;
+3
+- : id -> int = <fun>
+# interp prog2;;
+3
+- : id -> int = <fun>
