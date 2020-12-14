@@ -1,0 +1,74 @@
+diff 2kai2/parser.mly 2kai3/parser.mly
+38a39,42
+>      | TYPE ID ASSIGN ty error {
+>           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+>           [TypeDec ($2,$4)]
+>      }
+60a65,68
+>      | ID ASSIGN expr error    {
+>           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+>           Assign (Var $1, $3)
+>      }
+61a70,73
+>      | ID LS expr RS ASSIGN expr error  { 
+>           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+>           Assign (IndexedVar (Var $1, $3), $6)
+>      }
+66a79,82
+>      | SPRINT LP STR RP error  {
+>           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+>           CallProc ("sprint", [StrExp $3]) 
+>      }
+67a84,87
+>      | IPRINT LP expr RP error {
+>           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+>           CallProc ("iprint", [$3])
+>      }
+68a89,92
+>      | SCAN LP ID RP error  {
+>           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical)); 
+>           CallProc ("scan", [VarExp (Var $3)])
+>      }
+69a94,97
+>      | NEW LP ID RP error   {
+>           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+>           CallProc ("new", [ VarExp (Var $3)])
+>      }
+70a99,102
+>      | ID LP aargs_opt RP error  { 
+>           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+>           CallProc ($1, $3)
+>      }
+71a104,107
+>      | RETURN expr error    {
+>           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+>           CallProc ("return", [$2])
+>      }
+84a121,124
+>      | LB decs stmts error { 
+>           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
+>           Block ($2, $3)
+>      }
+diff 2kai2/print_ast.ml 2kai3/print_ast.ml
+51,52c51
+<         Parsing.Parse_error -> 
+<                 printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical))
+---
+>          Parsing.Parse_error -> printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical))
+diff 2kai2/sample.spl 2kai3/sample.spl
+2c2
+< 	int a, b, m, n, r;
+---
+> 	int a, b, m, n, r, x;
+11a12
+>         x = 1
+19,22c20,21
+<         {
+<                 wa = 1;
+<         }
+<         // aaaaa
+---
+>         iprint(m)
+>         sprint ("b")
+25a25
+>         sprint("a")

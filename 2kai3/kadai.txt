@@ -1,29 +1,11 @@
-yuki@yuki-LM-AR420:~/3nen_koki/CompilerConstructionLecture/2kai2$ ./print_ast 
-{
-	x = 1;
-	y = 2;
-	print(x);
-	b = 1
-	y
 syntax error
-row: 6
-A lexical of syntax error: y
-yuki@yuki-LM-AR420:~/3nen_koki/CompilerConstructionLecture/2kai2$ ./print_ast 
-{
-	x = 1;
-	// comment
-	1
+row: 13, a lexical of syntax error: n
 syntax error
-row: 4
-A lexical of syntax error: 1
-yuki@yuki-LM-AR420:~/3nen_koki/CompilerConstructionLecture/2kai2$ ./print_ast 
-{
-	// comment1
-	// comment2
-	// comment3
-	x = 1;
-	y = 2
-	if (x != 1) {
+row: 15, a lexical of syntax error: while
 syntax error
-row: 7
-A lexical of syntax error: if
+row: 22, a lexical of syntax error: sprint
+syntax error
+row: 23, a lexical of syntax error: sprint
+syntax error
+row: 27, a lexical of syntax error: }
+Block([VarDec(IntTyp,"a"); VarDec(IntTyp,"b"); VarDec(IntTyp,"m"); VarDec(IntTyp,"n"); VarDec(IntTyp,"r"); VarDec(IntTyp,"x")],[CallProc("sprint",[StrExp("You must give 2 integers.\n")]); CallProc("sprint",[StrExp("First integer: ")]); CallProc("scan",[VarExp(Var "a")]); CallProc("sprint",[StrExp("Second integer: ")]); CallProc("scan",[VarExp(Var "b")]); Assign(Var "m",VarExp(Var "a")); Assign(Var "n",VarExp(Var "b")); Assign(Var "r",CallFunc("-",[VarExp(Var "m"); CallFunc("*",[CallFunc("/",[VarExp(Var "m"); VarExp(Var "n")]); VarExp(Var "n")])])); Assign(Var "m",VarExp(Var "n")); Assign(Var "x",IntExp(1)); Assign(Var "n",VarExp(Var "r")); Assign(Var "x",IntExp(2)); While(CallFunc(">",[VarExp(Var "r"); IntExp(0)]),Block([],[Assign(Var "r",CallFunc("-",[VarExp(Var "m"); CallFunc("*",[CallFunc("/",[VarExp(Var "m"); VarExp(Var "n")]); VarExp(Var "n")])])); Assign(Var "m",VarExp(Var "n")); Assign(Var "n",VarExp(Var "r"))])); CallProc("iprint",[VarExp(Var "m")]); CallProc("sprint",[StrExp("b")]); CallProc("sprint",[StrExp("Answer = ")]); CallProc("iprint",[VarExp(Var "m")]); CallProc("sprint",[StrExp("\n")]); CallProc("sprint",[StrExp("a")])])

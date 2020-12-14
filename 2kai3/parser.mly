@@ -2,7 +2,6 @@
 
 open Printf
 open Ast
-open Lexer
 %}
 
 /* File parser.mly */
@@ -36,11 +35,11 @@ decs : decs dec { $1@$2 }
      ;
 
 dec  : ty ids SEMI   { List.map (fun x -> VarDec ($1,x)) $2 }
-     | TYPE ID ASSIGN ty SEMI {
+     | TYPE ID ASSIGN ty SEMI { [TypeDec ($2,$4)] }
+     | TYPE ID ASSIGN ty error {
           printf "syntax error\nrow: %d, a lexical of syntax error: %s\n" (!(Lexer.numOfEol)) (!(Lexer.lexical));
           [TypeDec ($2,$4)]
      }
-     | TYPE ID ASSIGN ty error { [TypeDec ($2,$4)] }
      | ty ID LP fargs_opt RP block  { [FuncDec($2, $4, $1, $6)] }
      | VOID ID LP fargs_opt RP block  { [FuncDec($2, $4, VoidTyp, $6)] }
      ; 
